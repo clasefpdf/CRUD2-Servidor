@@ -1,0 +1,71 @@
+@startuml
+title SprintBoard — Entity-relationship diagram
+
+entity "users" as users {
+  * id : INTEGER <<PK>>
+  --
+  * username : TEXT <<UNIQUE>>
+  * password : TEXT
+  * name : TEXT
+  * email : TEXT
+  * role : TEXT
+}
+
+entity "sprints" as sprints {
+  * id : INTEGER <<PK>>
+  --
+  * name : TEXT
+  * goal : TEXT
+  * start_date : TEXT
+  * end_date : TEXT
+  * status : TEXT (pending / active / completed)
+}
+
+entity "teams" as teams {
+  * id : INTEGER <<PK>>
+  --
+  * name : TEXT <<UNIQUE>>
+}
+
+entity "sprint_team_members" as sprint_team_members {
+  * sprint_id : INTEGER <<PK, FK>>
+  * team_id : INTEGER <<PK, FK>>
+  * user_id : INTEGER <<PK, FK>>
+  --
+  * role : TEXT (scrum_master / developer / reviewer)
+}
+
+entity "tasks" as tasks {
+  * id : INTEGER <<PK>>
+  --
+  * title : TEXT
+  * description : TEXT
+  * status : TEXT (todo / in_progress / done)
+  team_id : INTEGER <<FK, nullable>>
+  user_id : INTEGER <<FK, nullable>>
+  * sprint_id : INTEGER <<FK>>
+  * created_at : TEXT
+  * updated_at : TEXT
+}
+
+entity "comments" as comments {
+  * id : INTEGER <<PK>>
+  --
+  * task_id : INTEGER <<FK>>
+  * user_id : INTEGER <<FK>>
+  * content : TEXT
+  * created_at : TEXT
+}
+
+sprints ||--o{ sprint_team_members : sprint_id
+teams ||--o{ sprint_team_members : team_id
+users ||--o{ sprint_team_members : user_id
+
+sprints ||--o{ tasks : sprint_id
+teams |o--o{ tasks : team_id
+users |o--o{ tasks : user_id
+
+tasks ||--o{ comments : task_id
+users ||--o{ comments : user_id
+
+@enduml
