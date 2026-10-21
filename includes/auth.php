@@ -34,3 +34,14 @@ function requireAuth(): void
         redirect('login.php');
     }
 }
+
+
+// rols del backoffice
+function requireAdmin(): void
+{
+    requireAuth();
+    if (!isTeacher()) {
+        http_response_code(403);
+        exit('Acceso denegado.');
+    }
+}

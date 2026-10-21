@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../config/config.php';
+date_default_timezone_set(APP_TIMEZONE);
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/log.php';
 require_once __DIR__ . '/db.php';
