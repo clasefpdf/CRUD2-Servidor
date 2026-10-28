@@ -25,7 +25,7 @@ INSERT INTO tasks (title, description, status, team_id, user_id, sprint_id) VALU
 INSERT INTO comments (task_id, user_id, content) VALUES
 (1, 2, 'El model de dades està preparat.'),
 (4, 3, 'Cal revisar els comentaris abans de tancar la tasca.');
-INSERT INTO shifts (name, start_time, end_time) VALUES
+INSERT INTO work_shifts (name, start_time, end_time) VALUES
 ('Mañana', '06:00', '14:00'),
 ('Tarde', '14:00', '22:00'),
 ('Noche', '22:00', '06:00');

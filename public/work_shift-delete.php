@@ -30,4 +30,4 @@ try {
     http_response_code(500);
     exit('Error interno. Inténtalo de nuevo más tarde.');
 }
-redirect('shifts.php');
+redirect('work_shifts.php');

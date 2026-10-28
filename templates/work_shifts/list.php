@@ -10,14 +10,14 @@ $formatDuration = static function (int $minutes): string {
 };
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <p>.../ Departamentos / <a href="/../shifts.php">Turnos de trabajo</a></p>
+    <p>.../ Departamentos / <a href="work_shifts.php">Turnos de trabajo</a></p>
     <h1 class="mb-0">Turnos de trabajo</h1>
-    <a class="btn btn-primary" href="shift-create.php">Nuevo turno</a>
+    <a class="btn btn-primary" href="work_shift-create.php">Nuevo turno</a>
 </div>
 <?php if ($errors): ?><div class="alert alert-danger" role="alert"><ul class="mb-0"><?php foreach ($errors as $error): ?><li><?= h($error) ?></li><?php endforeach; ?></ul></div><?php endif; ?>
 <form method="get" class="row g-2 align-items-end mb-4" role="search" aria-label="Filtrar turnos">
     <div class="col-12 col-md-5">
-        <label class="form-label" for="q">Descripción contiene</label>
+        <label class="form-label" for="q">Nombre contiene</label>
         <input class="form-control" id="q" name="q" maxlength="100" value="<?= h($filters['q']) ?>">
     </div>
     <div class="col-12 col-md-3">
@@ -26,7 +26,7 @@ $formatDuration = static function (int $minutes): string {
     </div>
     <div class="col-12 col-md-4 d-flex gap-2">
         <button class="btn btn-secondary">Filtrar</button>
-        <a class="btn btn-outline-secondary" href="shifts.php">Limpiar</a>
+        <a class="btn btn-outline-secondary" href="work_shifts.php">Limpiar</a>
     </div>
 </form>
 <?php if ($shifts === []): ?>
@@ -36,7 +36,7 @@ $formatDuration = static function (int $minutes): string {
 <table class="table table-striped align-middle">
     <caption class="visually-hidden">Listado de turnos de trabajo</caption>
     <thead><tr>
-        <th scope="col">Descripción</th>
+        <th scope="col">Nombre</th>
         <th scope="col">Inicio</th>
         <th scope="col">Fin</th>
         <th scope="col">Duración</th>
@@ -46,18 +46,18 @@ $formatDuration = static function (int $minutes): string {
     <tbody>
     <?php foreach ($shifts as $shift): ?>
         <tr>
-            <th scope="row"><?= h($shift->getDescription()) ?></th>
+            <th scope="row"><?= h($shift->getName()) ?></th>
             <td><?= h($shift->getStartTime()) ?></td>
             <td><?= h($shift->getEndTime()) ?><?= $shift->crossesMidnight() ? ' <small class="text-muted">(día siguiente)</small>' : '' ?></td>
             <td><?= h($formatDuration($shift->durationMinutes())) ?></td>
             <td><?= $shift->covers($now) ? '<span class="badge bg-success">Turno actual</span>' : '' ?></td>
             <td class="text-end">
                 <div class="d-inline-flex gap-2">
-                    <a class="btn btn-sm btn-outline-secondary" href="shift-edit.php?id=<?= (int) $shift->getId() ?>" aria-label="Editar turno <?= h($shift->getDescription()) ?>">Editar</a>
-                    <form method="post" action="shift-delete.php" class="m-0" onsubmit="return confirm('¿Seguro que quieres eliminar este turno?');">
+                    <a class="btn btn-sm btn-outline-secondary" href="work_shift-edit.php?id=<?= (int) $shift->getId() ?>" aria-label="Editar turno <?= h($shift->getName()) ?>">Editar</a>
+                    <form method="post" action="work_shift-delete.php" class="m-0" onsubmit="return confirm('¿Seguro que quieres eliminar este turno?');">
                         <?= csrfField() ?>
                         <input type="hidden" name="id" value="<?= (int) $shift->getId() ?>">
-                        <button type="submit" class="btn btn-sm btn-outline-danger" aria-label="Eliminar turno <?= h($shift->getDescription()) ?>">Eliminar</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger" aria-label="Eliminar turno <?= h($shift->getName()) ?>">Eliminar</button>
                     </form>
                 </div>
             </td>

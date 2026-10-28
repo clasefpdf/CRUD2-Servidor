@@ -26,7 +26,7 @@ try {
 }
 
 $values = [
-    'description' => $shift->getDescription(),
+    'name' => $shift->getName(),
     'start_time' => $shift->getStartTime(),
     'end_time' => $shift->getEndTime(),
 ];
@@ -41,13 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $repository->update(
                 $id,
-                new WorkShift($values['description'], $values['start_time'], $values['end_time'])
+                new WorkShift($values['name'], $values['start_time'], $values['end_time'])
             );
             setFlash('success', 'Turno actualizado correctamente.');
-            redirect('shifts.php');
+            redirect('work_shifts.php');
         } catch (WorkShiftNotFoundException) { // esborrat per un altre usuari mentre s'editava
             setFlash('error', 'El turno ya no existe.');
-            redirect('shifts.php');
+            redirect('work_shifts.php');
         } catch (DuplicateWorkShiftException $exception) {
             $errors[] = $exception->getMessage();
         } catch (Throwable $exception) {
@@ -61,5 +61,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $heading = 'Editar turno';
 $submitLabel = 'Guardar cambios';
 require __DIR__ . '/../includes/header.php';
-require __DIR__ . '/../templates/shifts/form.php';
+require __DIR__ . '/../templates/work_shifts/form.php';
 require __DIR__ . '/../includes/footer.php';

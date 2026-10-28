@@ -15,7 +15,7 @@ final class WorkShiftValidator
 
         $name = is_string($input['name'] ?? null) ? trim($input['name']) : '';
         if ($name === '' || mb_strlen($name) > WorkShift::NAME_MAX_LENGTH) {
-            $errors[] = 'La descripción es obligatoria y no puede superar los ' . WorkShift::DESCRIPTION_MAX_LENGTH . ' caracteres.';
+            $errors[] = 'El nombre es obligatorio y no puede superar los ' . WorkShift::NAME_MAX_LENGTH . ' caracteres.';
         }
 
         $start = is_string($input['start_time'] ?? null) ? $input['start_time'] : '';

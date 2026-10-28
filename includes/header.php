@@ -19,7 +19,7 @@ use App\Util\Flash;
         <a class="text-white" href="history.php">Ordres de fabricacio</a>
         <a class="text-white" href="history.php">Maquines</a>        
         <a class="text-white" href="users.php">Usuarios</a>
-        <?php if (isTeacher()): ?><a class="text-white" href="shifts.php">Turnos</a><?php endif; ?>
+        <?php if (isTeacher()): ?><a class="text-white" href="work_shifts.php">Turnos</a><?php endif; ?>
         <a class="text-white" href="profile.php"><?= h($_SESSION['user_name']) ?></a>
         <form method="post" action="logout.php" class="m-0"><?= csrfField() ?><button class="btn btn-sm btn-outline-light">Eixir</button></form>
     </div>

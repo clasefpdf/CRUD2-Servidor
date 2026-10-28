@@ -6,13 +6,6 @@ namespace App;
 
 use InvalidArgumentException;
 
-/**
- * Torn de treball (p. ex. Matí 06:00–14:00).
- *
- * Les hores es guarden com a text "HH:MM" amb zeros a l'esquerra, de manera que
- * també es poden comparar i ordenar com a text en SQL.
- * Si l'hora de fi és anterior a la d'inici, el torn acaba el dia següent (22:00–06:00).
- */
 final class WorkShift
 {
     public const NAME_MAX_LENGTH = 100;
@@ -26,7 +19,7 @@ final class WorkShift
         private readonly ?int $id = null,
     ) {
         if (trim($name) === '' || mb_strlen($name) > self::NAME_MAX_LENGTH) {
-            throw new InvalidArgumentException('Descripción del turno no válida.');
+            throw new InvalidArgumentException('Nombre del turno no válido.');
         }
         if (!self::isValidTime($startTime) || !self::isValidTime($endTime)) {
             throw new InvalidArgumentException('Hora del turno no válida (formato HH:MM).');
@@ -61,13 +54,13 @@ final class WorkShift
         return $this->endTime;
     }
 
-    /** El torn acaba al dia següent de l'inici. */
+    /* El torn acaba al dia següent de l'inici. */
     public function crossesMidnight(): bool
     {
         return $this->endTime < $this->startTime;
     }
 
-    /** Minuts planificats del torn (base de la disponibilitat de l'OEE: 8 h = 480 min). */
+    /* Minuts planificats del torn (base de la disponibilitat de l'OEE: 8 h = 480 min). */
     public function durationMinutes(): int
     {
         $minutes = self::toMinutes($this->endTime) - self::toMinutes($this->startTime);
@@ -75,7 +68,7 @@ final class WorkShift
         return $minutes > 0 ? $minutes : $minutes + 24 * 60;
     }
 
-    /** L'interval és [inici, fi): a les 14:00 ja és el torn següent. */
+    /* L'interval és [inici, fi): a les 14:00 ja és el torn següent. */
     public function covers(string $time): bool
     {
         if (!self::isValidTime($time)) {
