@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-// Llistat de torns. Variables: $shifts (WorkShift[]), $filters, $errors, $now ("HH:MM").
+
 $formatDuration = static function (int $minutes): string {
     $hours = intdiv($minutes, 60);
     $rest = $minutes % 60;
@@ -36,22 +36,22 @@ $formatDuration = static function (int $minutes): string {
 <table class="table table-striped align-middle">
     <caption class="visually-hidden">Listado de turnos de trabajo</caption>
     <thead><tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Inicio</th>
-        <th scope="col">Fin</th>
-        <th scope="col">Duración</th>
-        <th scope="col"><span class="visually-hidden">Estado</span></th>
-        <th scope="col" class="text-end">Acciones</th>
+        <th>Nombre</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Duración</th>
+        <th>Estado</span></th>
+        <th>Acciones</th>
     </tr></thead>
     <tbody>
     <?php foreach ($shifts as $shift): ?>
         <tr>
-            <th scope="row"><?= h($shift->getName()) ?></th>
+            <th><?= h($shift->getName()) ?></th>
             <td><?= h($shift->getStartTime()) ?></td>
             <td><?= h($shift->getEndTime()) ?><?= $shift->crossesMidnight() ? ' <small class="text-muted">(día siguiente)</small>' : '' ?></td>
             <td><?= h($formatDuration($shift->durationMinutes())) ?></td>
             <td><?= $shift->covers($now) ? '<span class="badge bg-success">Turno actual</span>' : '' ?></td>
-            <td class="text-end">
+            <td>
                 <div class="d-inline-flex gap-2">
                     <a class="btn btn-sm btn-outline-secondary" href="work_shift-edit.php?id=<?= (int) $shift->getId() ?>" aria-label="Editar turno <?= h($shift->getName()) ?>">Editar</a>
                     <form method="post" action="work_shift-delete.php" class="m-0" onsubmit="return confirm('¿Seguro que quieres eliminar este turno?');">

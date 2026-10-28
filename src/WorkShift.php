@@ -60,7 +60,7 @@ final class WorkShift
         return $this->endTime < $this->startTime;
     }
 
-    /* Minuts planificats del torn (base de la disponibilitat de l'OEE: 8 h = 480 min). */
+
     public function durationMinutes(): int
     {
         $minutes = self::toMinutes($this->endTime) - self::toMinutes($this->startTime);
